@@ -1,0 +1,2 @@
+# mailREST
+service web messagerie
