@@ -21,7 +21,8 @@ public class toast {
 		IMessagerie toto = (IMessagerie) ctx.lookup("MessagerieBean");
 		System.out.println(toto.toString());
 		try {
-			toto.creerCompte("toto2", "TOTO2", "bien", new Date());
+			//toto.creerCompte("toto2", "TOTO2", "bien", new Date());
+			toto.consulterCompte("toto2");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

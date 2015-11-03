@@ -14,7 +14,7 @@ public class Message implements Serializable{
 	
 	@Transient
 	@XmlTransient
-	private static final long serialVersionUID = -5281778565297703906L;
+	private static final long serialVersionUID = -5672797311188576288L;
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	//@Column(name="qqch")    // pour choisir nom de la colonne dans BDD

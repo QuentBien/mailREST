@@ -15,7 +15,7 @@ public class Compte implements Serializable{
 	
 	@Transient
 	@XmlTransient
-	private static final long serialVersionUID = -5676848848189719727L;
+	private static final long serialVersionUID = 1514979305520219242L;
 	@Id
 	@XmlElement (name="login")
 	private String login;
