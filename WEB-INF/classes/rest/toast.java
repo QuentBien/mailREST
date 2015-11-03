@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import javax.naming.*;
 
+import ejb.entity.Compte;
 import ejb.service.IMessagerie;
 
 public class toast {
@@ -21,8 +22,9 @@ public class toast {
 		IMessagerie toto = (IMessagerie) ctx.lookup("MessagerieBean");
 		System.out.println(toto.toString());
 		try {
-			//toto.creerCompte("toto2", "TOTO2", "bien", new Date());
-			toto.consulterCompte("toto2");
+			toto.creerCompte("toto2", "TOTO2", "bien", new Date());
+			Compte c =toto.consulterCompte("toto2");
+			System.out.println(c);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
