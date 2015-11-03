@@ -1,4 +1,4 @@
-package clientEJB.entity;
+package ejb.entity;
 
 import java.io.Serializable;
 import java.util.Date;

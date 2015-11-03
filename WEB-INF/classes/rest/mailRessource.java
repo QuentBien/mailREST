@@ -9,8 +9,8 @@ import javax.naming.NamingException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import clientEJB.entity.*;
-import clientEJB.service.IMessagerie;
+import ejb.entity.*;
+import ejb.service.IMessagerie;
 
 @Path("/messagerie")
 public class mailRessource {
@@ -24,7 +24,7 @@ public class mailRessource {
 			properties.put("java.naming.factory.url.pkgs","com.sun.enterprise.naming");
 			properties.put("java.naming.factory.state","com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
 			properties.put("org.omg.CORBA.ORBInitialHost", "localhost");
-			properties.put("org.omg.CORBA.ORBInitialPort","3700"); //port de glassfish
+			properties.put("org.omg.CORBA.ORBInitialPort","3700"); //deuxième argument : port de glassfish
 			mailRessource.setMessagerie((IMessagerie) new InitialContext(properties).lookup("ejb/messagerie"));
 		} catch (NamingException e) {e.printStackTrace();}
 	}
@@ -33,14 +33,27 @@ public class mailRessource {
 	@POST
 	@Consumes ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public void creerCompte(Compte c){
-		mailRessource.getMessagerie().creerCompte(c.getLogin(), c.getName(), c.getPassword(), c.getBirthday());
+		try {
+			mailRessource.getMessagerie().creerCompte(c.getLogin(), c.getName(), c.getPassword(), c.getBirthday());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	@Path("/{login}")
 	@GET
 	@Produces ({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	public Compte consulterCompte(@PathParam("login") String login) {
-		return mailRessource.getMessagerie().consulterCompte(login);
+		Compte c = null;
+		try {
+			c = mailRessource.getMessagerie().consulterCompte(login);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return c;
 	}
 	
 	@Path("/message")
