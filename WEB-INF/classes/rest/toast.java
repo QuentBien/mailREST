@@ -10,7 +10,6 @@ import ejb.service.IMessagerie;
 public class toast {
 
 	public static void main(String[] args) throws NamingException {
-		// TODO Auto-generated method stub
 		//connexion au serveur glassfish
 		Properties properties = new Properties();
 		properties.put("java.naming.factory.initial","com.sun.enterprise.naming.SerialInitContextFactory");
@@ -20,7 +19,7 @@ public class toast {
 		properties.put("org.omg.CORBA.ORBInitialPort","3700"); //deuxième argument : port de glassfish
 		Context ctx = new InitialContext(properties);
 		IMessagerie toto = (IMessagerie) ctx.lookup("MessagerieBean");
-		System.out.println(toto);
+		System.out.println(toto.toString());
 		try {
 			toto.creerCompte("toto2", "TOTO2", "bien", new Date());
 		} catch (Exception e) {

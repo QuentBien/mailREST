@@ -1,7 +1,5 @@
 package rest;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Properties;
 
 import javax.naming.InitialContext;
