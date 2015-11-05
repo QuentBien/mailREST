@@ -42,15 +42,17 @@ public class mailRessource {
 
 	@Path("/compte")
 	@POST
+	@Produces (MediaType.APPLICATION_JSON)
 	@Consumes ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public void creerCompte(Compte c){
+	public String creerCompte(Compte c){
+		String s = "";
 		try {
 			mailRessource.getMessagerie().creerCompte(c.getLogin(), c.getName(), c.getPassword(), c.getBirthday());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			s = "{\"exception\":\"" + e.toString() + "\"}";
 			e.printStackTrace();
 		}
-
+		return s;
 	}
 
 	@Path("/compte/tutu/{login}")
