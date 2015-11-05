@@ -40,7 +40,7 @@ public class mailRessource {
 		
 	}
 
-	@Path("/compte")
+	@Path("/compte") 
 	@POST
 	@Produces (MediaType.APPLICATION_JSON)
 	@Consumes ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

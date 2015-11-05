@@ -2,6 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/glassfish4/glassfish/lib/appserv-rt.jar"/>
+	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/glassfish4/glassfish/lib/gf-client.jar"/>
+	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/glassfish4/glassfish/lib/javaee.jar"/>
+	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/glassfish4/glassfish/lib/jndi-properties.jar"/>
 	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/apache-tomcat-7.0.35/webapps/mailREST/WEB-INF/lib/aopalliance-repackaged-2.4.0-b31.jar"/>
 	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/apache-tomcat-7.0.35/webapps/mailREST/WEB-INF/lib/asm-debug-all-5.0.4.jar"/>
 	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/apache-tomcat-7.0.35/webapps/mailREST/WEB-INF/lib/genson-1.3.jar"/>
@@ -21,13 +25,10 @@
 	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/apache-tomcat-7.0.35/webapps/mailREST/WEB-INF/lib/jersey-guava-2.22.1.jar"/>
 	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/apache-tomcat-7.0.35/webapps/mailREST/WEB-INF/lib/jersey-media-jaxb.jar"/>
 	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/apache-tomcat-7.0.35/webapps/mailREST/WEB-INF/lib/jersey-server.jar"/>
+	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/apache-tomcat-7.0.35/webapps/mailREST/WEB-INF/lib/ojdbc6.jar"/>
 	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/apache-tomcat-7.0.35/webapps/mailREST/WEB-INF/lib/org.osgi.core-4.2.0.jar"/>
 	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/apache-tomcat-7.0.35/webapps/mailREST/WEB-INF/lib/osgi-resource-locator-1.0.1.jar"/>
 	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/apache-tomcat-7.0.35/webapps/mailREST/WEB-INF/lib/persistence-api-1.0.jar"/>
 	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/apache-tomcat-7.0.35/webapps/mailREST/WEB-INF/lib/validation-api-1.1.0.Final.jar"/>
-	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/apache-tomcat-7.0.35/webapps/mailREST/WEB-INF/lib/appserv-rt.jar"/>
-	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/apache-tomcat-7.0.35/webapps/mailREST/WEB-INF/lib/javaee.jar"/>
-	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/apache-tomcat-7.0.35/webapps/mailREST/WEB-INF/lib/jndi-properties.jar"/>
-	<classpathentry kind="lib" path="E:/L3 MIAGE/PAA/glassfish4/glassfish/lib/javaee.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="output" path=""/>
 </classpath>

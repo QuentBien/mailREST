@@ -7,7 +7,7 @@
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>rest</param-value>
-        </init-param>         
+        </init-param>      
     </servlet>
     <servlet-mapping>
         <servlet-name>Jersey Web Servlet</servlet-name>
