@@ -25,15 +25,16 @@ public class toast {
 		IMessagerie toto = (IMessagerie) ctx.lookup("MessagerieBean");
 		System.out.println(toto.toString());
 		try {
-			/*
+			
 			toto.creerCompte("toto2", "TOTO2", "bien", new Date());
 			toto.creerCompte("toto1", "TOTO1", "cool", new Date());
 			toto.creerCompte("toto3", "TOTO3", "super", new Date());
 			toto.creerCompte("toto4", "TOTO4", "parfait", new Date());
-			*/
+			
 			Compte c = toto.consulterCompte("toto3");
-			List<Message> m = (List<Message>) toto.releverCourrier("toto2");
-			System.out.println(m.get(0).getObjet());
+			//List<Message> m = (List<Message>) toto.releverCourrier("toto2");
+			//System.out.println(m.get(0).getObjet());
+			//toto.supprimerMessagesLus("toto2");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

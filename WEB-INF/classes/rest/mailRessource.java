@@ -68,21 +68,21 @@ public class mailRessource {
 	@Path("/compte/{login}")
 	@GET
 	@Produces ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public Compte consulterCompte(@PathParam("login") String login) {
+	public String consulterCompte(@PathParam("login") String login) {
 		Compte c = null;
-		String s = "{\"bien\":\"cool\"}";
+		String s = "";
 		try {
 			c = new Compte("lui", "bien", "Quent", new Date());
 			c = mailRessource.getMessagerie().consulterCompte(login);
-			String t = c.getLogin();
+			String t = c.getLogin() + "ok";
 			s = "{\"login\":\"" + t +"\",";
 			s += "\"messagerie\":\"" + mailRessource.getMessagerie().toString() +"\"}";
 		} catch (Exception e) {
 			s = "{\"exception\":\"" + e.toString() + "\"}";
 			e.printStackTrace();
 		}
-		//return s;
-		return c;
+		return s;
+		//return c;
 	}
 	
 	@Path("/messages/{login}")

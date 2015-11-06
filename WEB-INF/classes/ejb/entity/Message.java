@@ -46,53 +46,19 @@ public class Message implements Serializable{
 		this.etat = EtatMessage.NON_LU;
 		this.reception = null;
 	}
-	public String getObjet() {
-		return objet;
-	}
-	public String getCorps() {
-		return corps;
-	}
-	public Compte getEmetteur() {
-		return emetteur;
-	}
-	public Compte getDestinataire() {
-		return destinataire;
-	}
-	public Date getReception() {
-		return reception;
-	}
-	public EtatMessage getEtat() {
-		return etat;
-	}
-	public void setReception(Date reception) {
-		this.reception = reception;
-	}
-	public void setEtat(EtatMessage etat) {
-		this.etat = etat;
-	}
+	public String getObjet() {return objet;}
+	public String getCorps() {return corps;}
+	public Compte getEmetteur() {return emetteur;}
+	public Compte getDestinataire() {return destinataire;}
+	public Date getReception() {return reception;}
+	public EtatMessage getEtat() {return etat;}
+	public void setReception(Date reception) {this.reception = reception;}
+	public void setEtat(EtatMessage etat) {this.etat = etat;}
+	public void setCorps(String corps) {this.corps = corps;}
+	public void setEmetteur(Compte emetteur) {this.emetteur = emetteur;}
+	public void setDestinataire(Compte destinataire) {this.destinataire = destinataire;}
+	public int getId() {return id;}
+	public void setId(int id) {this.id = id;}
+	public void setObjet(String objet) {this.objet = objet;}
 
-	public void setCorps(String corps) {
-		this.corps = corps;
-	}
-
-	public void setEmetteur(Compte emetteur) {
-		this.emetteur = emetteur;
-	}
-
-	public void setDestinataire(Compte destinataire) {
-		this.destinataire = destinataire;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public void setObjet(String objet) {
-		this.objet = objet;
-	}
-	
 }
