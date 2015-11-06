@@ -1,21 +1,15 @@
 package rest;
 
 import java.util.Date;
-import java.util.Properties;
+//import java.util.Properties;
 
 import javax.naming.InitialContext;
 import javax.naming.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-/*
-import org.glassfish.internal.api.Globals;
 
-import com.sun.appserv.jdbc.DataSource;
-import com.sun.enterprise.module.ModulesRegistry;
-import com.sun.enterprise.module.bootstrap.StartupContext;
-import com.sun.enterprise.module.single.StaticModulesRegistry;
-*/
-import ejb.entity.*;
+import ejb.entity.Compte;
+import ejb.entity.Message;
 import ejb.service.IMessagerie;
 
 @Path("/messagerie")
@@ -48,6 +42,22 @@ public class mailRessource {
 		String s = "";
 		try {
 			mailRessource.getMessagerie().creerCompte(c.getLogin(), c.getName(), c.getPassword(), c.getBirthday());
+			s = "{\"login\":\""+mailRessource.getMessagerie().consulterCompte(c.getLogin()).getLogin()+"\"}";
+		} catch (Exception e) {
+			s = "{\"exception\":\"" + e.toString() + "\"}";
+			e.printStackTrace();
+		}
+		return s;
+	}
+	
+	@Path("/messages") 
+	@POST
+	@Produces ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Consumes ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	public String supprMessages(String login){
+		String s = "";
+		try {
+			mailRessource.getMessagerie().supprimerMessagesLus(login);
 		} catch (Exception e) {
 			s = "{\"exception\":\"" + e.toString() + "\"}";
 			e.printStackTrace();
@@ -82,11 +92,19 @@ public class mailRessource {
 		return new Compte(compte, "bien", "Quent", new Date());
 	}
 	
-	@Path("/message")
+	@Path("/message/{destinataire}")
 	@POST
-	@Produces ({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public void envoyerMessage(Message m) throws Exception {
-		mailRessource.getMessagerie().envoyerMessage(m.getObjet(), m.getCorps(), m.getEmetteur().getLogin(), m.getDestinataire().getLogin());
+	@Produces ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Consumes ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	public String envoyerMessage(@PathParam("destinataire") String destinataire, Message m) {
+		String s = "";
+		try {
+			mailRessource.getMessagerie().envoyerMessage(m.getEmetteur().getLogin(), destinataire, m.getObjet(), m.getCorps());
+		} catch (Exception e) {
+			s = "{\"exception\":\"" + e.toString() + "\"}";
+			e.printStackTrace();
+		}
+		return s;
 	}
 	
 	@GET

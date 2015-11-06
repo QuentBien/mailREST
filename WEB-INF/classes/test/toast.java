@@ -1,6 +1,6 @@
 package test;
 
-import java.util.Date;
+//import java.util.Date;
 import java.util.Properties;
 
 import javax.naming.*;
@@ -24,7 +24,7 @@ public class toast {
 		try {
 			//toto.creerCompte("toto2", "TOTO2", "bien", new Date());
 			Compte c = toto.consulterCompte("moi");
-			System.out.println(c.getSignup());
+			System.out.println(c.getLogin());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -32,7 +32,7 @@ public class Message implements Serializable{
 	//ajout
 	//clé étrangère emetteur reference Compte(login)
 	@ManyToOne
-	@XmlElement (name="desinataire")
+	@XmlElement (name="destinataire")
 	private Compte destinataire;
 	
 	public Message(){}
