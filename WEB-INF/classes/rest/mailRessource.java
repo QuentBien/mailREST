@@ -68,11 +68,11 @@ public class mailRessource {
 	@Path("/compte/{login}")
 	@GET
 	@Produces ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String consulterCompte(@PathParam("login") String login) {
+	public Compte consulterCompte(@PathParam("login") String login) {
 		Compte c = null;
 		String s = "";
 		try {
-			c = new Compte("lui", "bien", "Quent", new Date());
+			//c = new Compte("lui", "bien", "Quent", new Date());
 			c = mailRessource.getMessagerie().consulterCompte(login);
 			String t = c.getLogin() + "ok";
 			s = "{\"login\":\"" + t +"\",";
@@ -81,14 +81,14 @@ public class mailRessource {
 			s = "{\"exception\":\"" + e.toString() + "\"}";
 			e.printStackTrace();
 		}
-		return s;
-		//return c;
+		//return s;
+		return c;
 	}
 	
 	@Path("/messages/{login}")
 	@GET
 	@Produces ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String releverCourrier(@PathParam("login") String login) {
+	public List<Message> releverCourrier(@PathParam("login") String login) {
 		List<Message> messages = null;
 		String s = "";
 		try {
@@ -98,8 +98,8 @@ public class mailRessource {
 			s = "{\"exception\":\"" + e.toString() + "\"}";
 			e.printStackTrace();
 		}
-		return s;
-		//return messages;
+		//return s;
+		return messages;
 	}
 	
 	@Path("/message/{destinataire}")

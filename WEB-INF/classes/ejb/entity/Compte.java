@@ -7,34 +7,25 @@ import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 
-@Entity
 @XmlRootElement(name="compte")
-@XmlType(propOrder={})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Compte implements Serializable{
 	
-	@Transient
 	@XmlTransient
 	private static final long serialVersionUID = 1514979305520219242L;
-	@Id
-	@XmlElement (name="login")
+	//@XmlElement (name="login")
 	private String login;
-	@XmlElement (name="password")
+	//@XmlElement (name="password")
 	private String password;
-	@XmlElement (name="name")
+	//@XmlElement (name="name")
 	private String name;
-	@XmlElement (name="birthday")
+	//@XmlElement (name="birthday")
 	private Date birthday;
-	@XmlElement (name="signup")
+	//@XmlElement (name="signup")
 	private Date signup;
-	//ajout
-	//login sera la clé étrangère dans la table message
-	//un compte possède sa propre liste de messages reçus (et envoyés)
-	@OneToMany (mappedBy="destinataire")
-	@XmlElementWrapper (name="messagesRecus")
+	//@XmlElementWrapper (name="messagesRecus")
 	private List<Message> messagesRecus;
-	@OneToMany (mappedBy="emetteur")
-	@XmlElementWrapper (name="messagesEnvoyes")
+	//@XmlElementWrapper (name="messagesEnvoyes")
 	private List<Message> messagesEnvoyes;
 	
 	public Compte(){}
@@ -49,60 +40,19 @@ public class Compte implements Serializable{
 		this.signup = new Date();
 	}
 
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Date getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
-
-	public Date getSignup() {
-		return signup;
-	}
-
-	public List<Message> getMessagesRecus() {
-		return messagesRecus;
-	}
-
-	public void setMessagesRecus(List<Message> messagesRecus) {
-		this.messagesRecus = messagesRecus;
-	}
-
-	public List<Message> getMessagesEnvoyes() {
-		return messagesEnvoyes;
-	}
-
-	public void setMessagesEnvoyes(List<Message> messagesEnvoyes) {
-		this.messagesEnvoyes = messagesEnvoyes;
-	}
-
-	public void setSignup(Date signup) {
-		this.signup = signup;
-	}
+	public String getLogin() {return login;}
+	public void setLogin(String login) {this.login = login;}
+	public String getPassword() {return password;}
+	public void setPassword(String password) {this.password = password;}
+	public String getName() {return name;}
+	public void setName(String name) {this.name = name;}
+	public Date getBirthday() {return birthday;}
+	public void setBirthday(Date birthday) {this.birthday = birthday;}
+	public Date getSignup() {return signup;}
+	public List<Message> getMessagesRecus() {return messagesRecus;}
+	public void setMessagesRecus(List<Message> messagesRecus) {this.messagesRecus = messagesRecus;}
+	public List<Message> getMessagesEnvoyes() {return messagesEnvoyes;}
+	public void setMessagesEnvoyes(List<Message> messagesEnvoyes) {this.messagesEnvoyes = messagesEnvoyes;}
+	public void setSignup(Date signup) {this.signup = signup;}
 
 }

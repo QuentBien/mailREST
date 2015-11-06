@@ -6,33 +6,25 @@ import java.util.Date;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 
-@Entity
 @XmlRootElement(name="message")
-@XmlType(propOrder={})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Message implements Serializable{
 	
-	@Transient
 	@XmlTransient
 	private static final long serialVersionUID = -5672797311188576288L;
-	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+
 	private int id;
-	//@Column(name="qqch")    // pour choisir nom de la colonne dans BDD
-	@XmlElement (name="objet")
+	//@XmlElement (name="objet")
 	private String objet;
-	@XmlElement (name="corps")
+	//@XmlElement (name="corps")
 	private String corps;
-	@ManyToOne
-	@XmlElement (name="emetteur")
+	//@XmlElement (name="emetteur")
 	private Compte emetteur;
-	@XmlElement (name="date")
+	//@XmlElement (name="date")
 	private Date reception;
-	@XmlElement (name="etat")
+	//@XmlElement (name="etat")
 	private EtatMessage etat;
-	//ajout
-	//clé étrangère emetteur reference Compte(login)
-	@ManyToOne
-	@XmlElement (name="destinataire")
+	//@XmlElement (name="destinataire")
 	private Compte destinataire;
 	
 	public Message(){}
