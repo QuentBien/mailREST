@@ -2,6 +2,7 @@ package rest;
 
 import java.util.Date;
 //import java.util.Properties;
+import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.naming.*;
@@ -50,11 +51,10 @@ public class mailRessource {
 		return s;
 	}
 	
-	@Path("/messages") 
-	@POST
+	@Path("/messages/lus/{login}") 
+	@DELETE
 	@Produces ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	@Consumes ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String supprMessages(String login){
+	public String supprMessages(@PathParam("login") String login){
 		String s = "";
 		try {
 			mailRessource.getMessagerie().supprimerMessagesLus(login);
@@ -85,11 +85,21 @@ public class mailRessource {
 		return c;
 	}
 	
+	@Path("/messages/{login}")
 	@GET
-	@Path("/compte/test/{compte}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Compte avoirCompte(@PathParam("compte") String compte) {
-		return new Compte(compte, "bien", "Quent", new Date());
+	@Produces ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	public String releverCourrier(@PathParam("login") String login) {
+		List<Message> messages = null;
+		String s = "";
+		try {
+			messages = (List<Message>) mailRessource.getMessagerie().releverCourrier(login);
+			s = "{\"objet\":\"" + messages.get(0).getObjet() + "\"}";
+		} catch (Exception e) {
+			s = "{\"exception\":\"" + e.toString() + "\"}";
+			e.printStackTrace();
+		}
+		return s;
+		//return messages;
 	}
 	
 	@Path("/message/{destinataire}")
@@ -107,11 +117,11 @@ public class mailRessource {
 		return s;
 	}
 	
+	@Path("/compte/test/{compte}")
 	@GET
-	@Path("/accueil/{nomPromo}")
-	@Produces(MediaType.APPLICATION_XML)
-	public String direBonjour(@PathParam("nomPromo") String promo) {
-		return "<accueil> Bonjour la promo de : " + promo + " ! </accueil>";
+	@Produces(MediaType.APPLICATION_JSON)
+	public Compte avoirCompte(@PathParam("compte") String compte) {
+		return new Compte(compte, "bien", "Quent", new Date());
 	}
 	
 	public static IMessagerie getMessagerie() {

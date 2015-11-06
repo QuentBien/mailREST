@@ -1,11 +1,14 @@
 package test;
 
+import java.util.Date;
+import java.util.List;
 //import java.util.Date;
 import java.util.Properties;
 
 import javax.naming.*;
 
 import ejb.entity.Compte;
+import ejb.entity.Message;
 import ejb.service.IMessagerie;
 
 public class toast {
@@ -22,9 +25,15 @@ public class toast {
 		IMessagerie toto = (IMessagerie) ctx.lookup("MessagerieBean");
 		System.out.println(toto.toString());
 		try {
-			//toto.creerCompte("toto2", "TOTO2", "bien", new Date());
-			Compte c = toto.consulterCompte("moi");
-			System.out.println(c.getLogin());
+			/*
+			toto.creerCompte("toto2", "TOTO2", "bien", new Date());
+			toto.creerCompte("toto1", "TOTO1", "cool", new Date());
+			toto.creerCompte("toto3", "TOTO3", "super", new Date());
+			toto.creerCompte("toto4", "TOTO4", "parfait", new Date());
+			*/
+			Compte c = toto.consulterCompte("toto3");
+			List<Message> m = (List<Message>) toto.releverCourrier("toto2");
+			System.out.println(m.get(0).getObjet());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
