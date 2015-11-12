@@ -25,7 +25,7 @@ public class toast {
 		*/
 		Context ctx = new InitialContext();
 		IMessagerie toto = (IMessagerie) ctx.lookup("MessagerieBean");
-		System.out.println(toto.toString());
+		//System.out.println(toto.toString());
 		try {
 			/*
 			toto.creerCompte("toto2", "TOTO2", "bien", new Date());
@@ -33,9 +33,20 @@ public class toast {
 			toto.creerCompte("toto3", "TOTO3", "super", new Date());
 			toto.creerCompte("toto4", "TOTO4", "parfait", new Date());
 			*/
-			Compte c = toto.consulterCompte("toto3");
+			Compte c = toto.consulterCompte("toto2");
+			System.out.println("Login : " + c.getLogin() + "\n" +
+					"Naissance : " + c.getBirthday() + "\n" +
+					"Nom : " + c.getName() + "\n" +
+					"Mot de passe : " + c.getPassword() + "\n" +
+					"Date inscription : " + c.getSignup() + "\n");
 			List<Message> m = (List<Message>) toto.releverCourrier("toto2");
-			System.out.println(m.get(0).getObjet());
+			String s = "";
+			s = "Emetteur : " + m.get(0).getEmetteur().getLogin() + "\n";
+			s += "Destinataire : " + m.get(0).getDestinataire().getLogin() + "\n";
+			s += "Objet : " + m.get(0).getObjet() + "\n";
+			s += m.get(0).getCorps() + "\n";
+			s += "Date de récéption : " + m.get(0).getReception();
+			System.out.println(s);
 			//toto.supprimerMessagesLus("toto2");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

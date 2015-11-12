@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name="compte")
@@ -24,14 +23,15 @@ public class Compte implements Serializable{
 	//@XmlElement (name="signup")
 	private Date signup;
 	//@XmlElementWrapper (name="messagesRecus")
+	@XmlTransient
 	private List<Message> messagesRecus;
 	//@XmlElementWrapper (name="messagesEnvoyes")
+	@XmlTransient
 	private List<Message> messagesEnvoyes;
 	
 	public Compte(){}
 	
 	public Compte(String login, String password, String name, Date birthday) {
-		super();
 		this.login = login;
 		this.password = password;
 		this.name = name;
