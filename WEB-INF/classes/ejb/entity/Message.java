@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.*;
 @SequenceGenerator(name="message_sequence", sequenceName="message_seq")
 @Table(name = "mail_message")
 @XmlRootElement(name="message")
+@XmlType(propOrder = {"id","objet","corps","emetteur","destinataire","envoi","reception","etat"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Message implements Serializable{
 	@Transient
@@ -48,21 +49,23 @@ public class Message implements Serializable{
 		this.etat = EtatMessage.NON_LU;
 		this.reception = null;
 	}
+	//getters
 	public String getObjet() {return objet;}
 	public String getCorps() {return corps;}
 	public Compte getEmetteur() {return emetteur;}
 	public Compte getDestinataire() {return destinataire;}
 	public Date getReception() {return reception;}
 	public EtatMessage getEtat() {return etat;}
+	public int getId() {return id;}
+	public Date getEnvoi() {return envoi;}
+	//setters
 	public void setReception(Date reception) {this.reception = reception;}
 	public void setEtat(EtatMessage etat) {this.etat = etat;}
 	public void setCorps(String corps) {this.corps = corps;}
 	public void setEmetteur(Compte emetteur) {this.emetteur = emetteur;}
 	public void setDestinataire(Compte destinataire) {this.destinataire = destinataire;}
-	public int getId() {return id;}
 	public void setId(int id) {this.id = id;}
 	public void setObjet(String objet) {this.objet = objet;}
-	public Date getEnvoi() {return envoi;}
 	public void setEnvoi(Date envoi) {this.envoi = envoi;}
 
 }

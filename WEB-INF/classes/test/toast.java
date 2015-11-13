@@ -17,15 +17,11 @@ import rest.mailRessource;
 public class toast {
 
 	public static void main(String[] args) throws NamingException {
-		//connexion au serveur glassfish
-		//Context ctx = new InitialContext();
-		//IMessagerie toto = (IMessagerie) ctx.lookup("MessagerieBean");
-		//System.out.println(toto.toString());
 		try {
 			mailRessource m = new mailRessource();
 			//String s = m.consulterCompte("luffy");
 			//System.out.println(s);
-			Compte c = m.consulterCompte("luffy");
+			Compte c = (Compte) m.consulterCompte("toto2").getEntity();
 			/*
 			m.creerCompte("toto2", "TOTO2", "bien", new Date());
 			m.creerCompte("toto1", "TOTO1", "cool", new Date());
@@ -37,20 +33,21 @@ public class toast {
 					"Nom : " + c.getName() + "\n" +
 					"Mot de passe : " + c.getPassword() + "\n" +
 					"Date inscription : " + c.getSignup() + "\n");
-			
+			/*
 			JAXBContext jc = JAXBContext.newInstance(Compte.class);
 			Marshaller mar = jc.createMarshaller();
 			mar.marshal(c, System.out);
-			/*
+			*/
 			List<Message> l = (List<Message>) m.releverCourrier("toto2");
 			String s = "\n";
 			s += "Emetteur : " + l.get(0).getEmetteur().getLogin() + "\n";
 			s += "Destinataire : " + l.get(0).getDestinataire().getLogin() + "\n";
 			s += "Objet : " + l.get(0).getObjet() + "\n";
 			s += l.get(0).getCorps() + "\n";
-			s += "Date de récéption : " + l.get(0).getReception();
+			s += "Date de récéption : " + l.get(0).getReception() + "\n";
+			s += "Date d'envoi : " + l.get(0).getEnvoi();
 			System.out.println(s);
-			*/
+			
 
 			//toto.supprimerMessagesLus("toto2");
 		} catch (Exception e) {

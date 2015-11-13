@@ -59,7 +59,6 @@ public class Compte implements Serializable{
 		this.password = password;
 		this.name = name;
 		this.birthday = birthday;
-		//date au moment de l'inscription
 		this.signup = signup;
 	}
 

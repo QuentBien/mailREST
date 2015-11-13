@@ -1,14 +1,19 @@
 package rest;
 
+import java.net.URI;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
 import javax.naming.InitialContext;
+import javax.ejb.EJB;
 import javax.naming.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+
+import org.glassfish.jersey.server.internal.process.RespondingContext;
 
 import ejb.entity.Compte;
 import ejb.entity.Message;
@@ -16,7 +21,8 @@ import ejb.service.IMessagerie;
 
 @Path("/messagerie")
 public class mailRessource {
-	private static IMessagerie messagerie;
+	
+	private static IMessagerie MessagerieBean;
 
 	public mailRessource() {
 		
@@ -37,75 +43,67 @@ public class mailRessource {
 	@POST
 	@Produces ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Consumes ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public Compte creerCompte(Compte c){
-		Compte retour = null;
+	public Response creerCompte(Compte c){
+		URI uri = null;
 		try {
 			mailRessource.getMessagerie().creerCompte(c.getLogin(), c.getPassword(), c.getName(), c.getBirthday());
-			retour = mailRessource.getMessagerie().consulterCompte(c.getLogin());
+			uri = UriBuilder.fromUri("/compte").path(c.getLogin()).build();
+			return Response.created(uri).build();
 		} catch (Exception e) {
-			//s = "{\"exception\":\"" + e.toString() + "\"}";
-			e.printStackTrace();
+			return Response.status(403).type("text/plain").entity(e.toString()).build();
 		}
-		return retour;
 	}
 	
 	@Path("/messages/lus/{login}") 
 	@DELETE
 	@Produces ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String supprMessages(@PathParam("login") String login){
+	public Response supprMessages(@PathParam("login") String login){
 		String s = "";
 		try {
 			mailRessource.getMessagerie().supprimerMessagesLus(login);
+			return Response.status(200).build();
 		} catch (Exception e) {
-			s = "{\"exception\":\"" + e.toString() + "\"}";
-			e.printStackTrace();
+			return Response.status(404).type("text/plain").entity(e.toString()).build();
 		}
-		return s;
 	}
 
 	@Path("/compte/{login}")
 	@GET
 	@Produces ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public Compte consulterCompte(@PathParam("login") String login) {
+	public Response consulterCompte(@PathParam("login") String login) {
 		Compte c = null;
-		//String s ="";
 		try {
-			c = mailRessource.getMessagerie().consulterCompte(login);
-			//s = new String(c.getLogin());
-			//s = mailRessource.getMessagerie().toString();
+			c = (mailRessource.getMessagerie().consulterCompte(login));
+			return Response.status(200).entity(c).build();
 		} catch (Exception e) {
-			e.printStackTrace();
+			return Response.status(404).type("text/plain").entity(e.toString()).build();
 		}
-		//return "{\"login\" : \""+ s +"\"}";
-		return c;
 	}
 	
 	@Path("/messages/{login}")
 	@GET
 	@Produces ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<Message> releverCourrier(@PathParam("login") String login) {
-		List<Message> messages = new LinkedList<>();
+	public Response releverCourrier(@PathParam("login") String login) {
+		List<Message> messages = null;
 		try {
 			messages = (List<Message>) mailRessource.getMessagerie().releverCourrier(login);
+			return Response.status(200).entity(messages).build();
 		} catch (Exception e) {
-			e.printStackTrace();
+			return Response.status(404).type("text/plain").entity(e.toString()).build();
 		}
-		return messages;
 	}
 	
 	@Path("/message/{destinataire}")
 	@POST
 	@Produces ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Consumes ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String envoyerMessage(@PathParam("destinataire") String destinataire, Message m) {
-		String s = "";
+	public Response envoyerMessage(@PathParam("destinataire") String destinataire, Message m) {
 		try {
 			mailRessource.getMessagerie().envoyerMessage(m.getEmetteur().getLogin(), destinataire, m.getObjet(), m.getCorps());
+			return Response.status(201).build();
 		} catch (Exception e) {
-			s = "{\"exception\":\"" + e.toString() + "\"}";
-			e.printStackTrace();
+			return Response.status(404).type("text/plain").entity(e.toString()).build();
 		}
-		return s;
 	}
 	
 	@Path("/compte/test/{compte}")
@@ -115,12 +113,7 @@ public class mailRessource {
 		return new Compte(compte, "bien", "Quent", new Date());
 	}
 	
-	public static IMessagerie getMessagerie() {
-		return messagerie;
-	}
-
-	public static void setMessagerie(IMessagerie messagerie) {
-		mailRessource.messagerie = messagerie;
-	}
+	public static IMessagerie getMessagerie() {return MessagerieBean;}
+	public static void setMessagerie(IMessagerie messagerie) {mailRessource.MessagerieBean = messagerie;}
 	
 }
