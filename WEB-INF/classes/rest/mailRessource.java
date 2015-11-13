@@ -1,8 +1,9 @@
 package rest;
 
 import java.util.Date;
-//import java.util.Properties;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
 import javax.naming.InitialContext;
 import javax.naming.*;
@@ -21,25 +22,31 @@ public class mailRessource {
 		
 		try {
 			//connexion au serveur glassfish
-			mailRessource.setMessagerie((IMessagerie) new InitialContext().lookup("MessagerieBean"));
+			Properties properties = new Properties();
+			properties.put("java.naming.factory.initial","com.sun.enterprise.naming.SerialInitContextFactory");
+			properties.put("java.naming.factory.url.pkgs","com.sun.enterprise.naming");
+			properties.put("java.naming.factory.state","com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
+			properties.put("org.omg.CORBA.ORBInitialHost", "localhost");
+			properties.put("org.omg.CORBA.ORBInitialPort","3700");
+			mailRessource.setMessagerie((IMessagerie) new InitialContext(properties).lookup("MessagerieBean"));
 		} catch (NamingException e) {e.printStackTrace();}
 		
 	}
 
 	@Path("/compte") 
 	@POST
-	@Produces (MediaType.APPLICATION_JSON)
+	@Produces ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Consumes ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String creerCompte(Compte c){
-		String s;
+	public Compte creerCompte(Compte c){
+		Compte retour = null;
 		try {
-			mailRessource.getMessagerie().creerCompte(c.getLogin(), c.getName(), c.getPassword(), c.getBirthday());
-			s = "{\"login\":\""+mailRessource.getMessagerie().consulterCompte(c.getLogin()).getLogin()+"\"}";
+			mailRessource.getMessagerie().creerCompte(c.getLogin(), c.getPassword(), c.getName(), c.getBirthday());
+			retour = mailRessource.getMessagerie().consulterCompte(c.getLogin());
 		} catch (Exception e) {
-			s = "{\"exception\":\"" + e.toString() + "\"}";
+			//s = "{\"exception\":\"" + e.toString() + "\"}";
 			e.printStackTrace();
 		}
-		return s;
+		return retour;
 	}
 	
 	@Path("/messages/lus/{login}") 
@@ -61,11 +68,15 @@ public class mailRessource {
 	@Produces ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public Compte consulterCompte(@PathParam("login") String login) {
 		Compte c = null;
+		//String s ="";
 		try {
 			c = mailRessource.getMessagerie().consulterCompte(login);
+			//s = new String(c.getLogin());
+			//s = mailRessource.getMessagerie().toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		//return "{\"login\" : \""+ s +"\"}";
 		return c;
 	}
 	
@@ -73,7 +84,7 @@ public class mailRessource {
 	@GET
 	@Produces ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<Message> releverCourrier(@PathParam("login") String login) {
-		List<Message> messages = null;
+		List<Message> messages = new LinkedList<>();
 		try {
 			messages = (List<Message>) mailRessource.getMessagerie().releverCourrier(login);
 		} catch (Exception e) {

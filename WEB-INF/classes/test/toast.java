@@ -6,50 +6,54 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.naming.*;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
 
 import ejb.entity.Compte;
 import ejb.entity.Message;
 import ejb.service.IMessagerie;
+import rest.mailRessource;
 
 public class toast {
 
 	public static void main(String[] args) throws NamingException {
 		//connexion au serveur glassfish
-		/*
-		Properties properties = new Properties();
-		properties.put("java.naming.factory.initial","com.sun.enterprise.naming.SerialInitContextFactory");
-		properties.put("java.naming.factory.url.pkgs","com.sun.enterprise.naming");
-		properties.put("java.naming.factory.state","com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
-		properties.put("org.omg.CORBA.ORBInitialHost", "localhost");
-		properties.put("org.omg.CORBA.ORBInitialPort","3700"); //deuxième argument : port de glassfish
-		*/
-		Context ctx = new InitialContext();
-		IMessagerie toto = (IMessagerie) ctx.lookup("MessagerieBean");
+		//Context ctx = new InitialContext();
+		//IMessagerie toto = (IMessagerie) ctx.lookup("MessagerieBean");
 		//System.out.println(toto.toString());
 		try {
+			mailRessource m = new mailRessource();
+			//String s = m.consulterCompte("luffy");
+			//System.out.println(s);
+			Compte c = m.consulterCompte("luffy");
 			/*
-			toto.creerCompte("toto2", "TOTO2", "bien", new Date());
-			toto.creerCompte("toto1", "TOTO1", "cool", new Date());
-			toto.creerCompte("toto3", "TOTO3", "super", new Date());
-			toto.creerCompte("toto4", "TOTO4", "parfait", new Date());
+			m.creerCompte("toto2", "TOTO2", "bien", new Date());
+			m.creerCompte("toto1", "TOTO1", "cool", new Date());
+			m.creerCompte("toto3", "TOTO3", "super", new Date());
+			m.creerCompte("toto4", "TOTO4", "parfait", new Date());
 			*/
-			Compte c = toto.consulterCompte("toto2");
 			System.out.println("Login : " + c.getLogin() + "\n" +
 					"Naissance : " + c.getBirthday() + "\n" +
 					"Nom : " + c.getName() + "\n" +
 					"Mot de passe : " + c.getPassword() + "\n" +
 					"Date inscription : " + c.getSignup() + "\n");
-			List<Message> m = (List<Message>) toto.releverCourrier("toto2");
-			String s = "";
-			s = "Emetteur : " + m.get(0).getEmetteur().getLogin() + "\n";
-			s += "Destinataire : " + m.get(0).getDestinataire().getLogin() + "\n";
-			s += "Objet : " + m.get(0).getObjet() + "\n";
-			s += m.get(0).getCorps() + "\n";
-			s += "Date de récéption : " + m.get(0).getReception();
+			
+			JAXBContext jc = JAXBContext.newInstance(Compte.class);
+			Marshaller mar = jc.createMarshaller();
+			mar.marshal(c, System.out);
+			/*
+			List<Message> l = (List<Message>) m.releverCourrier("toto2");
+			String s = "\n";
+			s += "Emetteur : " + l.get(0).getEmetteur().getLogin() + "\n";
+			s += "Destinataire : " + l.get(0).getDestinataire().getLogin() + "\n";
+			s += "Objet : " + l.get(0).getObjet() + "\n";
+			s += l.get(0).getCorps() + "\n";
+			s += "Date de récéption : " + l.get(0).getReception();
 			System.out.println(s);
+			*/
+
 			//toto.supprimerMessagesLus("toto2");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

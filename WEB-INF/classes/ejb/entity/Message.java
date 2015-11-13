@@ -6,26 +6,36 @@ import java.util.Date;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 
+@Entity
+@SequenceGenerator(name="message_sequence", sequenceName="message_seq")
+@Table(name = "mail_message")
 @XmlRootElement(name="message")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Message implements Serializable{
-	
+	@Transient
 	@XmlTransient
-	private static final long serialVersionUID = -5672797311188576288L;
-
+	private static final long serialVersionUID = 1L;
+	@Id @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "message_sequence")
 	private int id;
-	//@XmlElement (name="objet")
+	@Column(name="objet")  
 	private String objet;
-	//@XmlElement (name="corps")
+	@Column(name="corps") 
 	private String corps;
-	//@XmlElement (name="emetteur")
+	@ManyToOne
+	@JoinColumn(name="emetteur_login", nullable=false)  
 	private Compte emetteur;
-	//@XmlElement (name="date")
-	private Date reception;
-	//@XmlElement (name="etat")
-	private EtatMessage etat;
-	//@XmlElement (name="destinataire")
+	@ManyToOne
+	@JoinColumn(name="destinataire_login", nullable=false)  
 	private Compte destinataire;
+	@Column(name="envoi", nullable=false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date envoi;
+	@Column(name="reception") 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date reception;
+	@Column(name="etat", nullable=false)  
+	@Enumerated(EnumType.STRING)
+	private EtatMessage etat;
 	
 	public Message(){}
 	
@@ -52,5 +62,7 @@ public class Message implements Serializable{
 	public int getId() {return id;}
 	public void setId(int id) {this.id = id;}
 	public void setObjet(String objet) {this.objet = objet;}
+	public Date getEnvoi() {return envoi;}
+	public void setEnvoi(Date envoi) {this.envoi = envoi;}
 
 }
