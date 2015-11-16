@@ -29,11 +29,9 @@ public class Message implements Serializable{
 	@JoinColumn(name="destinataire_login", nullable=false)  
 	private Compte destinataire;
 	@Column(name="envoi", nullable=false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date envoi;
+	private String envoi;
 	@Column(name="reception") 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date reception;
+	private String reception;
 	@Column(name="etat", nullable=false)  
 	@Enumerated(EnumType.STRING)
 	private EtatMessage etat;
@@ -54,18 +52,18 @@ public class Message implements Serializable{
 	public String getCorps() {return corps;}
 	public Compte getEmetteur() {return emetteur;}
 	public Compte getDestinataire() {return destinataire;}
-	public Date getReception() {return reception;}
+	public String getReception() {return reception;}
 	public EtatMessage getEtat() {return etat;}
 	public int getId() {return id;}
-	public Date getEnvoi() {return envoi;}
+	public String getEnvoi() {return envoi;}
 	//setters
-	public void setReception(Date reception) {this.reception = reception;}
+	public void setReception(String reception) {this.reception = reception;}
 	public void setEtat(EtatMessage etat) {this.etat = etat;}
 	public void setCorps(String corps) {this.corps = corps;}
 	public void setEmetteur(Compte emetteur) {this.emetteur = emetteur;}
 	public void setDestinataire(Compte destinataire) {this.destinataire = destinataire;}
 	public void setId(int id) {this.id = id;}
 	public void setObjet(String objet) {this.objet = objet;}
-	public void setEnvoi(Date envoi) {this.envoi = envoi;}
+	public void setEnvoi(String envoi) {this.envoi = envoi;}
 
 }

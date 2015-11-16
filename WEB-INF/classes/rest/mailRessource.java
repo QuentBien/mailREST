@@ -22,20 +22,7 @@ public class mailRessource {
 	@EJB
 	private IMessagerie MessagerieBean;
 
-	public mailRessource() {
-		/*
-		try {
-			//connexion au serveur glassfish
-			Properties properties = new Properties();
-			properties.put("java.naming.factory.initial","com.sun.enterprise.naming.SerialInitContextFactory");
-			properties.put("java.naming.factory.url.pkgs","com.sun.enterprise.naming");
-			properties.put("java.naming.factory.state","com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
-			properties.put("org.omg.CORBA.ORBInitialHost", "localhost");
-			properties.put("org.omg.CORBA.ORBInitialPort","3700");
-			mailRessource.setMessagerie((IMessagerie) new InitialContext(properties).lookup("MessagerieBean"));
-		} catch (NamingException e) {e.printStackTrace();}
-		*/
-	}
+	public mailRessource() {}
 
 	@Path("/compte") 
 	@POST
@@ -43,7 +30,7 @@ public class mailRessource {
 	@Consumes ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public Response creerCompte(Compte c){
 		URI uri = null;
-		try {
+		try { 
 			this.getMessagerie().creerCompte(c.getLogin(), c.getPassword(), c.getName(), c.getBirthday());
 			uri = UriBuilder.fromUri("/compte").path(c.getLogin()).build();
 			return Response.created(uri).build();
@@ -101,13 +88,6 @@ public class mailRessource {
 		} catch (Exception e) {
 			return Response.status(404).type("text/plain").entity(e.toString()).build();
 		}
-	}
-	
-	@Path("/compte/test/{compte}")
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Compte avoirCompte(@PathParam("compte") String compte) {
-		return new Compte(compte, "bien", "Quent", new Date());
 	}
 	
 	public IMessagerie getMessagerie() {return MessagerieBean;}

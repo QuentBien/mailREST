@@ -1,6 +1,7 @@
 package ejb.entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -29,11 +30,11 @@ public class Compte implements Serializable{
 	@XmlElement (name="birthday")
 	@Column(name="birthday", nullable=false)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date birthday;
+	private String birthday;
 	@XmlElement (name="signup")
 	@Column(name="signup", nullable=false)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date signup;
+	private String signup;
 	//@XmlElementWrapper (name="messagesRecus")
 	@OneToMany (mappedBy="destinataire")
 	@XmlTransient
@@ -45,16 +46,18 @@ public class Compte implements Serializable{
 	
 	public Compte(){}
 	
-	public Compte(String login, String password, String name, Date birthday) {
+	public Compte(String login, String password, String name, String birthday) {
 		this.login = login;
 		this.password = password;
 		this.name = name;
 		this.birthday = birthday;
 		//date au moment de l'inscription
-		this.signup = new Date();
+		Date d = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		this.signup = sdf.format(d);
 	}
 	
-	public Compte(String login, String password, String name, Date birthday, Date signup) {
+	public Compte(String login, String password, String name, String birthday, String signup) {
 		this.login = login;
 		this.password = password;
 		this.name = name;
@@ -68,13 +71,13 @@ public class Compte implements Serializable{
 	public void setPassword(String password) {this.password = password;}
 	public String getName() {return name;}
 	public void setName(String name) {this.name = name;}
-	public Date getBirthday() {return birthday;}
-	public void setBirthday(Date birthday) {this.birthday = birthday;}
-	public Date getSignup() {return signup;}
+	public String getBirthday() {return birthday;}
+	public void setBirthday(String birthday) {this.birthday = birthday;}
+	public String getSignup() {return signup;}
 	public List<Message> getMessagesRecus() {return messagesRecus;}
 	public void setMessagesRecus(List<Message> messagesRecus) {this.messagesRecus = messagesRecus;}
 	public List<Message> getMessagesEnvoyes() {return messagesEnvoyes;}
 	public void setMessagesEnvoyes(List<Message> messagesEnvoyes) {this.messagesEnvoyes = messagesEnvoyes;}
-	public void setSignup(Date signup) {this.signup = signup;}
+	public void setSignup(String signup) {this.signup = signup;}
 
 }
